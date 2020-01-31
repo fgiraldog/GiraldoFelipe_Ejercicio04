@@ -25,19 +25,18 @@ combinations_array = combinations([0,1,2,3,4,5,6,7,8,9,10],1)
 for i in range(0,11):
 	
 	score_array = np.zeros((0))
-	combinations_array = (list(combinations([0,1,2,3,4,5,6,7,8,9,10],i+1)))
+	combinations_array = np.array((list(combinations(np.array([0,1,2,3,4,5,6,7,8,9,10]),i+2))))
 	
 	for element in combinations_array:
 		print(element)
 		x_comb = x_train[:,element]
-		print('shape', np.shape(x_comb))
 		regression = sklearn.linear_model.LinearRegression()
 		regression.fit(x_comb, y_train)
 
-		# score = regression.score(x_test,y_test)
-		# score_array = np.append(score_array, score)
+		score = regression.score(x_test[:,element],y_test)
+		score_array = np.append(score_array, score)
 
-	# print(score_array)
+	print(score_array)
 
 
 score_array = []
