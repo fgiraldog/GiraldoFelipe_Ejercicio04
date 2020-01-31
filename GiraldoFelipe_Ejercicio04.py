@@ -22,27 +22,26 @@ score_matrix = np.array((11,1))
 
 combinations_array = combinations([0,1,2,3,4,5,6,7,8,9,10],1)
 
-
-print(np.transpose((list(combinations_array))))
-
-# for i in range(0,11):
+for i in range(0,11):
 	
-# 	score_array = np.zeros((0))
-# 	combinations_array = np.transpose(np.array(list(combinations([0,1,2,3,4,5,6,7,8,9,10],i+1))))
+	score_array = np.zeros((0))
+	combinations_array = (list(combinations([0,1,2,3,4,5,6,7,8,9,10],i+1)))
 	
-# 	for j in range(1,len(combinations_array)):
-# 		x_comb = x_train[:,np.array(list(combinations_array))[j]]
-# 		regression = sklearn.linear_model.LinearRegression()
-# 		regression.fit(x_comb, y_train)
+	for element in combinations_array:
+		print(element)
+		x_comb = x_train[:,element]
+		print('shape', np.shape(x_comb))
+		regression = sklearn.linear_model.LinearRegression()
+		regression.fit(x_comb, y_train)
 
-# 		score = regression.score(x_test,y_test)
-# 		score_array = np.append(score_array, score)
+		# score = regression.score(x_test,y_test)
+		# score_array = np.append(score_array, score)
 
-# 	print(score_array)
+	# print(score_array)
 
 
 score_array = []
-_lambda = np.logspace(0.1, 3, 10, endpoint=True)/100
+_lambda = np.logspace(-3, 1, 10, endpoint=True)/100
 for element in _lambda:
 	
 	lasso = sklearn.linear_model.Lasso(alpha = element)
@@ -54,4 +53,6 @@ for element in _lambda:
 
 plt.figure()
 plt.plot(_lambda,score_array)
+plt.ylabel('$R^2$')
+plt.xlabel(r'$\lambda$')
 plt.savefig('lasso.png')
